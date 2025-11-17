@@ -8,7 +8,7 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_genre", columnDefinition = "SERIAL")
+    @Column(name = "id_genre")
     private Long idGenre;
 
     @Column(name = "libelle", nullable = false, unique = true, length = 50)
