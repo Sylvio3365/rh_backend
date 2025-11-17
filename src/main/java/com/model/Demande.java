@@ -31,6 +31,10 @@ public class Demande {
     @JoinColumn(name = "id_personnel", nullable = false)
     private Personnel personnel;
 
+    @ManyToOne
+    @JoinColumn(name = "id_type_conge", nullable = false)
+    private TypeConge typeConge;
+
     public Demande() {
     }
 

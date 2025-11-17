@@ -145,7 +145,9 @@ CREATE TABLE demande
     etat         INTEGER      NOT NULL,
     date_demande DATE         NOT NULL,
     id_personnel INTEGER      NOT NULL,
+    id_type_conge  INTEGER        NOT NULL,
     PRIMARY KEY (id_demande),
+    FOREIGN KEY (id_type_conge) REFERENCES type_conge (id_type_conge),
     FOREIGN KEY (id_personnel) REFERENCES personnel (id_personnel)
 );
 

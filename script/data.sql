@@ -3,7 +3,6 @@ values ('Contrat d essaie', 6, 1),
        ('CDD', 24, 0),
        ('CDI', 0, 0);
 
-
 INSERT INTO type_document (libelle)
 values ('CNI'),
        ('CV'),
@@ -51,10 +50,4 @@ VALUES ('Homme'),
 
 -- Insertion des catégories de personnel
 INSERT INTO categorie_personnel (libelle)
-VALUES ('Employés');
-
-INSERT INTO categorie_personnel (libelle)
-VALUES ('Cadres');
-
-INSERT INTO categorie_personnel (libelle)
-VALUES ('Dirigeants');
+VALUES ('Employés'), ('Cadres'),('Dirigeants');
