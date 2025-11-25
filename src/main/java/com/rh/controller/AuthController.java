@@ -24,6 +24,11 @@ public class AuthController {
     @Autowired
     private UtilisateurService utilisateurService;
 
+    @GetMapping("/hello")
+    public ResponseEntity<?> hello() {
+        return ResponseEntity.ok("Hello");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @RequestParam String username,
