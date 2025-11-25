@@ -1,5 +1,8 @@
 package com.rh.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +21,6 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:9090")
 public class AuthController {
 
     @Autowired
@@ -26,7 +28,11 @@ public class AuthController {
 
     @GetMapping("/hello")
     public ResponseEntity<?> hello() {
-        return ResponseEntity.ok("Hello");
+        Map<String, String> response = new HashMap<>();
+        response.put("succes", "true");
+        response.put("message", "hello");
+        response.put("error", null);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
