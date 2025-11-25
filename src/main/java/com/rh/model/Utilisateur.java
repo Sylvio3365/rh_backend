@@ -14,20 +14,20 @@ public class Utilisateur {
     @Column(name = "username", nullable = false, length = 50, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 50, unique = true)
+    @Column(name = "password", nullable = false, length = 50)
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "id_personnel", nullable = true)
+    @JoinColumn(name = "id_personnel", nullable = false, unique = true)
     private Personnel personnel;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String username, String password, Personnel p) {
+    public Utilisateur(String username, String password, Personnel personnel) {
         this.username = username;
         this.password = password;
-        this.personnel = p;
+        this.personnel = personnel;
     }
 
     public Long getIdUtilisateur() {
@@ -54,6 +54,14 @@ public class Utilisateur {
         this.password = password;
     }
 
+    public Personnel getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(Personnel personnel) {
+        this.personnel = personnel;
+    }
+
     @Override
     public String toString() {
         return "Utilisateur{" +
@@ -61,13 +69,5 @@ public class Utilisateur {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
-
-    public Personnel getPersonnel() {
-        return personnel;
-    }
-
-    public void setPersonnel(Personnel personnel) {
-        this.personnel = personnel;
     }
 }

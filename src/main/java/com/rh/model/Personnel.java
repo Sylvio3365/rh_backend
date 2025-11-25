@@ -2,6 +2,7 @@ package com.rh.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "personnel")
@@ -27,8 +28,8 @@ public class Personnel {
     @Column(name = "photo", nullable = false, length = 150)
     private String photo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_utilisateur", unique = true)
+    @OneToOne(mappedBy = "personnel")
+    @JsonIgnore
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -42,17 +43,18 @@ public class Personnel {
     public Personnel() {
     }
 
-    public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo, Utilisateur utilisateur, Genre genre, CategoriePersonnel categoriePersonnel) {
+    public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo, Genre genre,
+            CategoriePersonnel categoriePersonnel) {
         this.dtn = dtn;
         this.statut = statut;
         this.nom = nom;
         this.prenom = prenom;
         this.photo = photo;
-        this.utilisateur = utilisateur;
         this.genre = genre;
         this.categoriePersonnel = categoriePersonnel;
     }
 
+    // Getters et setters...
     public Long getIdPersonnel() {
         return idPersonnel;
     }
@@ -134,7 +136,6 @@ public class Personnel {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", photo='" + photo + '\'' +
-                ", utilisateur=" + utilisateur +
                 ", genre=" + genre +
                 ", categoriePersonnel=" + categoriePersonnel +
                 '}';

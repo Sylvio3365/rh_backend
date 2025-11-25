@@ -16,4 +16,5 @@ public class GenreService {
     public List<Genre> findAll() {
         return genreRepository.findAll();
     }
+
 }
