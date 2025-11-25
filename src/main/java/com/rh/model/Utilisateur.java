@@ -18,7 +18,7 @@ public class Utilisateur {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "id_personnel", nullable = false)
+    @JoinColumn(name = "id_personnel", nullable = true)
     private Personnel personnel;
 
     public Utilisateur() {

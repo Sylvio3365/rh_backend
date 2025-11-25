@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.rh.entite.auth.AuthResponse;
 import com.rh.model.Utilisateur;
 import com.rh.service.UtilisateurService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -47,7 +45,7 @@ public class AuthController {
                 session.setMaxInactiveInterval(30 * 60); // 30 minutes
                 return ResponseEntity.ok(new AuthResponse(true, "Login successful", user));
             } else {
-                return ResponseEntity.status(401).body(new AuthResponse(false, "Invalid credentials", null));
+                return ResponseEntity.status(401).body(new AuthResponse(false, "Login fail", null));
             }
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new AuthResponse(false, "Login error: " + e.getMessage(), null));
