@@ -2,6 +2,8 @@ package com.rh.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -52,6 +54,14 @@ public class Personnel {
         this.photo = photo;
         this.genre = genre;
         this.categoriePersonnel = categoriePersonnel;
+    }
+
+    public int getAge() {
+        if (this.dtn == null) {
+            return 0;
+        }
+        LocalDate now = LocalDate.now();
+        return Period.between(this.dtn, now).getYears();
     }
 
     // Getters et setters...

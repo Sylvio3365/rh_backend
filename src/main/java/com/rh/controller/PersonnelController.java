@@ -59,6 +59,23 @@ public class PersonnelController {
         }
     }
 
+    @GetMapping("/statistics/age-distribution")
+    public ResponseEntity<Map<String, Object>> getAgeDistributionStatistics() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Map<String, Object> ageStats = personnelService.calculateStatisticsAgeDistribution();
+            response.put("success", true);
+            response.put("data", ageStats);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
     @GetMapping("/statistics/count")
     public ResponseEntity<Map<String, Object>> getPersonnelCount() {
         Map<String, Object> response = new HashMap<>();
@@ -72,6 +89,36 @@ public class PersonnelController {
             response.put("success", false);
             response.put("data", null);
             response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/statistics/contract-distribution")
+    public ResponseEntity<Map<String, Object>> getContractDistributionStatistics() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Map<String, Object> stats = personnelService.calculateStatisticsContractDistribution();
+
+            // Vérifier si le service a retourné une erreur
+            if (stats.get("success").equals(true)) {
+                response.put("success", true);
+                response.put("data", stats.get("data"));
+                response.put("error", null);
+                response.put("message", stats.get("message"));
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("data", null);
+                response.put("error", stats.get("error"));
+                response.put("message", stats.get("message"));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            response.put("message", "Error calculating contract distribution statistics");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
