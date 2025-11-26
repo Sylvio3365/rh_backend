@@ -1,4 +1,5 @@
 package com.rh.service;
+
 import com.rh.model.Genre;
 import com.rh.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,4 +16,5 @@ public class GenreService {
     public List<Genre> findAll() {
         return genreRepository.findAll();
     }
+
 }

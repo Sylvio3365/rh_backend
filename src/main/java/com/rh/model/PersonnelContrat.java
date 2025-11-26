@@ -48,6 +48,7 @@ public class PersonnelContrat {
         this.id = id;
     }
 
+
     public Poste getPoste() { return this.poste ;}
     public void setPoste(Poste poste) { this.poste = poste;}
 

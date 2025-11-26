@@ -10,18 +10,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface HeureSupRepository extends JpaRepository<HeureSup, Integer> {
+public interface HeureSupRepository extends JpaRepository<HeureSup, Long> {
     
     List<HeureSup> findByPersonnelIdPersonnelAndDateBetween(
-        Integer idPersonnel, LocalDate debut, LocalDate fin);
+        Long idPersonnel, LocalDate debut, LocalDate fin);
     
     @Query("SELECT h FROM HeureSup h WHERE h.personnel.idPersonnel = :idPersonnel " +
            "AND MONTH(h.date) = :mois AND YEAR(h.date) = :annee")
     List<HeureSup> findByPersonnelAndMoisAnnee(
-        @Param("idPersonnel") Integer idPersonnel,
+        @Param("idPersonnel") Long idPersonnel,
         @Param("mois") int mois,
         @Param("annee") int annee);
     
     @Query("SELECT h FROM HeureSup h WHERE h.presenceJournaliere.idPresenceJour = :idPresenceJour")
-    List<HeureSup> findByPresenceJournaliere(@Param("idPresenceJour") Integer idPresenceJour);
+    List<HeureSup> findByPresenceJournaliere(@Param("idPresenceJour") Long idPresenceJour);
 }

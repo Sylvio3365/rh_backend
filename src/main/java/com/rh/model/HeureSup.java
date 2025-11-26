@@ -13,7 +13,7 @@ public class HeureSup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_heure_sup")
-    private Integer idHeureSup;
+    private Long idHeureSup;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_personnel", nullable = false)
@@ -47,8 +47,8 @@ public class HeureSup {
     }
     
     // Getters et Setters
-    public Integer getIdHeureSup() { return idHeureSup; }
-    public void setIdHeureSup(Integer idHeureSup) { this.idHeureSup = idHeureSup; }
+    public Long getIdHeureSup() { return idHeureSup; }
+    public void setIdHeureSup(Long idHeureSup) { this.idHeureSup = idHeureSup; }
     public Personnel getPersonnel() { return personnel; }
     public void setPersonnel(Personnel personnel) { this.personnel = personnel; }
     public LocalDate getDate() { return date; }

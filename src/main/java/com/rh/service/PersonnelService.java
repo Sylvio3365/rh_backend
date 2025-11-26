@@ -5,20 +5,25 @@ import com.rh.repository.PersonnelRepository;
 import com.rh.model.PersonnelContrat;
 import com.rh.repository.PersonnelContratRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class PersonnelService {
+    
+    @Autowired
+    private PersonnelRepository personnelRepository;
 
-    private final PersonnelRepository personnelRepository;
-    private final PersonnelContratRepository contratRepository;
+    @Autowired
+    private PersonnelContratRepository contratRepository;
 
-    public PersonnelService(PersonnelRepository personnelRepository , PersonnelContratRepository contratRepository) {
-        this.personnelRepository = personnelRepository;
-        this.contratRepository = contratRepository;
+  
+    public int getTotalPersonnelCount() {
+        return (int) personnelRepository.count();
     }
 
     public List<Personnel> findAll() {
@@ -56,4 +61,126 @@ public class PersonnelService {
     //     return dto;
     // }
 
+    public double[] calculateStatisticsGenderDistribution() {
+        long total = personnelRepository.count();
+        long maleCount = personnelRepository.countByGenreName("Homme");
+        long femaleCount = personnelRepository.countByGenreName("Femme");
+        double maleP = total > 0 ? (maleCount * 100.0) / total : 0;
+        double femaleP = total > 0 ? (femaleCount * 100.0) / total : 0;
+        maleP = Math.round(maleP * 100.0) / 100.0;
+        femaleP = Math.round(femaleP * 100.0) / 100.0;
+        return new double[] { maleP, femaleP };
+    }
+
+    public Map<String, Object> calculateStatisticsAgeDistribution() {
+        List<Personnel> personnels = personnelRepository.findAll();
+
+        // Compteurs pour hommes
+        int hommeInf25 = 0;
+        int homme25et30 = 0;
+        int homme31et40 = 0;
+        int homme41et50 = 0;
+        int hommeSup50 = 0;
+
+        // Compteurs pour femmes
+        int femmeInf25 = 0;
+        int femme25et30 = 0;
+        int femme31et40 = 0;
+        int femme41et50 = 0;
+        int femmeSup50 = 0;
+
+        for (Personnel p : personnels) {
+            int age = p.getAge();
+            String genre = p.getGenre().getLibelle();
+
+            if ("Homme".equalsIgnoreCase(genre)) {
+                if (age < 25) {
+                    hommeInf25++;
+                } else if (age >= 25 && age <= 30) {
+                    homme25et30++;
+                } else if (age >= 31 && age <= 40) {
+                    homme31et40++;
+                } else if (age >= 41 && age <= 50) {
+                    homme41et50++;
+                } else {
+                    hommeSup50++;
+                }
+            } else if ("Femme".equalsIgnoreCase(genre)) {
+                if (age < 25) {
+                    femmeInf25++;
+                } else if (age >= 25 && age <= 30) {
+                    femme25et30++;
+                } else if (age >= 31 && age <= 40) {
+                    femme31et40++;
+                } else if (age >= 41 && age <= 50) {
+                    femme41et50++;
+                } else {
+                    femmeSup50++;
+                }
+            }
+        }
+
+        Map<String, Object> ageChart = new HashMap<>();
+        List<Map<String, Object>> series = new ArrayList<>();
+
+        Map<String, Object> hommesSeries = new HashMap<>();
+        hommesSeries.put("name", "Hommes");
+        hommesSeries.put("data", List.of(hommeInf25, homme25et30, homme31et40, homme41et50, hommeSup50));
+
+        Map<String, Object> femmesSeries = new HashMap<>();
+        femmesSeries.put("name", "Femmes");
+        femmesSeries.put("data", List.of(femmeInf25, femme25et30, femme31et40, femme41et50, femmeSup50));
+
+        series.add(hommesSeries);
+        series.add(femmesSeries);
+        ageChart.put("series", series);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", true);
+        result.put("data", ageChart);
+        result.put("error", null);
+        result.put("message", "Age distribution calculated successfully");
+        return result;
+    }
+
+    public Map<String, Object> calculateStatisticsContractDistribution() {
+        try {
+            long total = personnelRepository.countPersonnelWithContract();
+
+            long cdiCount = personnelRepository.countByContractType("CDI");
+            long cddCount = personnelRepository.countByContractType("CDD");
+            long essaiCount = personnelRepository.countByContractType("Contrat d essai");
+
+            double cdiPercentage = total > 0 ? (cdiCount * 100.0) / total : 0;
+            double cddPercentage = total > 0 ? (cddCount * 100.0) / total : 0;
+            double essaiPercentage = total > 0 ? (essaiCount * 100.0) / total : 0;
+
+            cdiPercentage = Math.round(cdiPercentage * 100.0) / 100.0;
+            cddPercentage = Math.round(cddPercentage * 100.0) / 100.0;
+            essaiPercentage = Math.round(essaiPercentage * 100.0) / 100.0;
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", true);
+            result.put("data", Map.of(
+                    "cdiPercentage", cdiPercentage,
+                    "cddPercentage", cddPercentage,
+                    "essaiPercentage", essaiPercentage,
+                    "cdiCount", cdiCount,
+                    "cddCount", cddCount,
+                    "essaiCount", essaiCount,
+                    "total", total));
+            result.put("error", null);
+            result.put("message", "Contract distribution calculated successfully");
+
+            return result;
+
+        } catch (Exception e) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("data", null);
+            result.put("error", e.getMessage());
+            result.put("message", "Error calculating contract distribution");
+            return result;
+        }
+    }
 }
