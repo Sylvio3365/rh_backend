@@ -3,6 +3,11 @@ package com.rh.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+import java.time.Period;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 @Table(name = "personnel")
 public class Personnel {
@@ -47,6 +52,8 @@ public class Personnel {
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", unique = true)
+    @OneToOne(mappedBy = "personnel")
+    @JsonIgnore
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -57,7 +64,19 @@ public class Personnel {
     @JoinColumn(name = "id_categorie_personnel", nullable = false)
     private CategoriePersonnel categoriePersonnel;
 
+
     public Personnel() {}
+  
+    public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo, Genre genre,
+            CategoriePersonnel categoriePersonnel) {
+        this.dtn = dtn;
+        this.statut = statut;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.photo = photo;
+        this.genre = genre;
+        this.categoriePersonnel = categoriePersonnel;
+    }
 
     public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo,
                      String matricule, String lieuNaissance, String nationalite, String adresse, String stf,
@@ -140,6 +159,16 @@ public class Personnel {
 
     public void setCategoriePersonnel(CategoriePersonnel categoriePersonnel) { this.categoriePersonnel = categoriePersonnel; }
 
+    public int getAge() {
+        if (this.dtn == null) {
+            return 0;
+        }
+        LocalDate now = LocalDate.now();
+        return Period.between(this.dtn, now).getYears();
+    }
+
+   
+
     @Override
     public String toString() {
         return "Personnel{" +
@@ -160,3 +189,4 @@ public class Personnel {
                 '}';
     }
 }
+
