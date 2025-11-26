@@ -1,15 +1,10 @@
 package com.rh.service;
 
-import com.rh.dto.PersonnelDetailDTO;
-import com.rh.repository.PersonnelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class FicheDePaieService {
-
 
     @Autowired
     private CnapsService cnapsService;
