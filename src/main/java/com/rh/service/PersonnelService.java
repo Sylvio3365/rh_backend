@@ -5,18 +5,21 @@ import com.rh.repository.PersonnelRepository;
 import com.rh.model.PersonnelContrat;
 import com.rh.repository.PersonnelContratRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class PersonnelService {
     
     @Autowired
-    private final PersonnelRepository personnelRepository;
-   @Autowired
-    private final PersonnelContratRepository contratRepository;
+    private PersonnelRepository personnelRepository;
+
+    @Autowired
+    private PersonnelContratRepository contratRepository;
 
   
     public int getTotalPersonnelCount() {
