@@ -10,7 +10,7 @@ public class Personnel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_personnel")
-    private Long idPersonnel;
+    private Integer idPersonnel;
 
     @Column(name = "dtn", nullable = false)
     private LocalDate dtn;
@@ -53,11 +53,11 @@ public class Personnel {
         this.categoriePersonnel = categoriePersonnel;
     }
 
-    public Long getIdPersonnel() {
+    public Integer getIdPersonnel() {
         return idPersonnel;
     }
 
-    public void setIdPersonnel(Long idPersonnel) {
+    public void setIdPersonnel(Integer idPersonnel) {
         this.idPersonnel = idPersonnel;
     }
 
