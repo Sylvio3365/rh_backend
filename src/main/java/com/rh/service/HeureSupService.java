@@ -79,14 +79,14 @@ public class HeureSupService {
     /**
      * Récupérer les heures sup d'une période
      */
-    public List<HeureSup> getHeuresSupPeriode(Integer idPersonnel, LocalDate debut, LocalDate fin) {
+    public List<HeureSup> getHeuresSupPeriode(Long idPersonnel, LocalDate debut, LocalDate fin) {
         return heureSupRepository.findByPersonnelIdPersonnelAndDateBetween(idPersonnel, debut, fin);
     }
     
     /**
      * Récupérer les heures sup d'un mois
      */
-    public List<HeureSup> getHeuresSupMois(Integer idPersonnel, int mois, int annee) {
+    public List<HeureSup> getHeuresSupMois(Long idPersonnel, int mois, int annee) {
         return heureSupRepository.findByPersonnelAndMoisAnnee(idPersonnel, mois, annee);
     }
     
@@ -94,7 +94,7 @@ public class HeureSupService {
      * Supprimer des heures sup
      */
     @Transactional
-    public void supprimerHeureSup(Integer idHeureSup) {
+    public void supprimerHeureSup(Long idHeureSup) {
         heureSupRepository.deleteById(idHeureSup);
     }
 }
