@@ -70,8 +70,8 @@ INSERT INTO
 VALUES
     ('Homme'),
     ('Femme');
-
--- Insertion des catégories de personnel
+INSERT INTO categorie_personnel (libelle)
+VALUES ('Employés'), ('Cadres'),('Dirigeants');
 INSERT INTO
     categorie_personnel (libelle)
 VALUES
@@ -339,3 +339,4 @@ VALUES
     ('julie.razafy', 'julie123', 8),
     ('david.ramanana', 'david123', 9),
     ('sarah.ravoay', 'sarah123', 10);
+

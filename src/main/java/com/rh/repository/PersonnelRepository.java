@@ -2,12 +2,14 @@ package com.rh.repository;
 
 import com.rh.model.Personnel;
 
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
@@ -25,4 +27,5 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
 
     @Query("SELECT COUNT(pc) FROM PersonnelContrat pc WHERE pc.typeContrat.libelle = :typeContrat")
     long countByContractType(@Param("typeContrat") String typeContrat);
+
 }

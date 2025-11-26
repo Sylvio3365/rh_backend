@@ -11,6 +11,11 @@ public class PersonnelContrat {
     @EmbeddedId
     private PersonnelContratId id;
 
+    @ManyToOne
+    @MapsId("idPoste")
+    @JoinColumn(name = "id_poste")
+    private Poste poste;
+
     @Column(name = "date_debut", nullable = false)
     private LocalDate dateDebut;
 
@@ -42,6 +47,10 @@ public class PersonnelContrat {
     public void setId(PersonnelContratId id) {
         this.id = id;
     }
+
+
+    public Poste getPoste() { return this.poste ;}
+    public void setPoste(Poste poste) { this.poste = poste;}
 
     public LocalDate getDateDebut() {
         return dateDebut;

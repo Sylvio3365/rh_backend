@@ -1,13 +1,13 @@
 package com.rh.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.rh.model.Personnel;
 import com.rh.service.PersonnelService;
-
-import java.util.HashMap;
+import com.rh.model.PersonnelContrat;
+import com.rh.repository.PersonnelContratRepository;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,27 @@ public class PersonnelController {
 
     @Autowired
     private PersonnelService personnelService;
+  
+  
+    @GetMapping
+    public List<Personnel> getAllPersonnel() {
+        return personnelService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Personnel getPersonnelById(@PathVariable Long id) {
+        return personnelService.findById(id);
+    }
+
+    @GetMapping("/{id}/contrats")
+    public List<PersonnelContrat> getContratById(@PathVariable Long id) {
+        return personnelService.getContratByPersonnel(id);
+    }
+
+    @GetMapping("/{id}/contrat/actif")
+    public PersonnelContrat getContratActifById(@PathVariable Long id) {
+        return personnelService.getContratActifByPersonnel(id);
+    }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAllPersonnel() {
@@ -123,3 +144,4 @@ public class PersonnelController {
         }
     }
 }
+
