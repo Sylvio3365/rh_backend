@@ -37,7 +37,7 @@ public class HeureSupController {
      */
     @GetMapping("/periode/{idPersonnel}")
     public ResponseEntity<List<HeureSup>> getHeuresSupPeriode(
-            @PathVariable Integer idPersonnel,
+            @PathVariable Long idPersonnel,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debut,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
         
@@ -49,7 +49,7 @@ public class HeureSupController {
      */
     @GetMapping("/mois/{idPersonnel}")
     public ResponseEntity<List<HeureSup>> getHeuresSupMois(
-            @PathVariable Integer idPersonnel,
+            @PathVariable Long idPersonnel,
             @RequestParam int mois,
             @RequestParam int annee) {
         
@@ -60,7 +60,7 @@ public class HeureSupController {
      * Supprimer des heures sup
      */
     @DeleteMapping("/{idHeureSup}")
-    public ResponseEntity<?> supprimerHeureSup(@PathVariable Integer idHeureSup) {
+    public ResponseEntity<?> supprimerHeureSup(@PathVariable Long idHeureSup) {
         try {
             heureSupService.supprimerHeureSup(idHeureSup);
             return ResponseEntity.ok(Map.of("message", "Heures sup supprimées"));
