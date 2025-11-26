@@ -51,3 +51,27 @@ VALUES ('Homme'),
 -- Insertion des catégories de personnel
 INSERT INTO categorie_personnel (libelle)
 VALUES ('Employés'), ('Cadres'),('Dirigeants');
+
+
+-- Pour le test
+INSERT INTO poste (nom, id_departement)
+VALUES
+    ('Développeuse Frontend Senior', 1),
+    ('Analyste Data', 2),
+    ('Responsable Data', 2);
+    
+-- Poste 1 : Développeuse Frontend - RH (Premier poste)
+UPDATE personnnel_contrat
+SET date_fin = '2023-04-01'
+WHERE id_poste = 1 AND id_personnel = 1;
+-- Poste 2 : Développeuse Frontend Senior - RH (PROMOTION)
+INSERT INTO personnnel_contrat (id_poste, id_personnel, date_debut, date_fin, salaire, id_type_contrat)
+VALUES (2, 1, '2023-04-02', '2024-06-30', 1800000, 2);
+
+-- Poste 3 : Analyste Data - Finance (MOBILITE)
+INSERT INTO personnnel_contrat (id_poste, id_personnel, date_debut, date_fin, salaire, id_type_contrat)
+VALUES (3, 1, '2024-07-01', '2025-02-15', 2000000, 2);
+
+-- Poste 4 : Responsable Data - Finance (PROMOTION)
+INSERT INTO personnnel_contrat (id_poste, id_personnel, date_debut, date_fin, salaire, id_type_contrat)
+VALUES (4, 1, '2025-02-16', NULL, 2500000, 3);
