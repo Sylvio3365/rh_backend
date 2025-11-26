@@ -1,4 +1,5 @@
 package com.rh.model;
+
 import jakarta.persistence.*;
 
 @Entity

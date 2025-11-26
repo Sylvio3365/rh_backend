@@ -70,4 +70,6 @@ public class Utilisateur {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
+
