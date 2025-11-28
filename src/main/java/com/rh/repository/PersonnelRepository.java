@@ -4,6 +4,7 @@ import com.rh.model.Personnel;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,11 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
     @Query("SELECT COUNT(pc) FROM PersonnelContrat pc WHERE pc.typeContrat.libelle = :typeContrat")
     long countByContractType(@Param("typeContrat") String typeContrat);
 
+    @Query("SELECT p FROM Personnel p WHERE " +
+            "(:nom IS NULL OR p.nom = :nom) AND " +
+            "(:prenom IS NULL OR p.prenom = :prenom)")
+    Optional<Personnel> findOneByNameFirstname(
+        @Param("nom") String nom, 
+        @Param("prenom") String prenom
+    );
 }

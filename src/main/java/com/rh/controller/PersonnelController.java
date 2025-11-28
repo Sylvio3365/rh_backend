@@ -5,10 +5,12 @@ import com.rh.service.PersonnelService;
 import com.rh.model.PersonnelContrat;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,36 @@ public class PersonnelController {
     @GetMapping
     public List<Personnel> getAllPersonnel() {
         return personnelService.findAll();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Object>> findOneByNameFirstname(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String prenom) {
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Optional<Personnel> personnel = personnelService.findOneByNameFirstname(nom, prenom);
+
+            if (personnel.isPresent()) {
+                response.put("success", true);
+                response.put("data", personnel.get());
+                response.put("error", null);
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("data", null);
+                response.put("error", "Personnel non trouvé");
+                response.put("message", "Aucun personnel correspondant aux critères de recherche");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @GetMapping("/{id}")

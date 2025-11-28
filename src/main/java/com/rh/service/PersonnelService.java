@@ -6,6 +6,7 @@ import com.rh.model.PersonnelContrat;
 import com.rh.repository.PersonnelContratRepository;
 import org.springframework.stereotype.Service;
 import java.util.Map;
+import java.util.Optional;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,14 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class PersonnelService {
-    
+
     @Autowired
     private PersonnelRepository personnelRepository;
 
     @Autowired
     private PersonnelContratRepository contratRepository;
 
-  
+    public Optional<Personnel> findOneByNameFirstname(String nom, String prenom) {
+        return personnelRepository.findOneByNameFirstname(nom, prenom);
+    }
+
     public int getTotalPersonnelCount() {
         return (int) personnelRepository.count();
     }
@@ -34,7 +38,7 @@ public class PersonnelService {
         return personnelRepository.findById(id).orElse(null);
     }
 
-    public List<PersonnelContrat> getContratByPersonnel(Long idPersonnel){
+    public List<PersonnelContrat> getContratByPersonnel(Long idPersonnel) {
         return contratRepository.findByIdIdPersonnel(idPersonnel);
     }
 
@@ -42,7 +46,8 @@ public class PersonnelService {
         List<PersonnelContrat> contrats = contratRepository.findByIdIdPersonnel(idPersonnel);
         LocalDate now = LocalDate.now();
         for (PersonnelContrat pc : contrats) {
-            boolean isActif = (pc.getDateFin() == null) || (!now.isBefore(pc.getDateDebut()) && !now.isAfter(pc.getDateFin()));
+            boolean isActif = (pc.getDateFin() == null)
+                    || (!now.isBefore(pc.getDateDebut()) && !now.isAfter(pc.getDateFin()));
             if (isActif) {
                 return pc;
             }
@@ -50,15 +55,14 @@ public class PersonnelService {
         return null;
     }
 
-
     // public List<PersonnelDTO> getAllPersonnel() {
-    //     List<PersonnelDTO> dto = new ArrayList<>();
-    //     List<Personnel> personnels = personnelRepository.findAll();
-    //     for(Personnel p : personnels){
-    //         PersonnelDTO pd = new PersonnelDTO(p);
-    //         dto.add(pd);
-    //     }
-    //     return dto;
+    // List<PersonnelDTO> dto = new ArrayList<>();
+    // List<Personnel> personnels = personnelRepository.findAll();
+    // for(Personnel p : personnels){
+    // PersonnelDTO pd = new PersonnelDTO(p);
+    // dto.add(pd);
+    // }
+    // return dto;
     // }
 
     public double[] calculateStatisticsGenderDistribution() {
