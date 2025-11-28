@@ -104,18 +104,18 @@ CREATE INDEX idx_heure_sup_pourcentage ON heure_sup(pourcentage);
 -- Ajouter le champ id_horaire
 -- ============================================
 
-ALTER TABLE personnnel_contrat 
-ADD COLUMN id_horaire INT;
+-- ALTER TABLE personnnel_contrat 
+-- ADD COLUMN id_horaire INT;
 
-ALTER TABLE personnnel_contrat
-ADD FOREIGN KEY(id_horaire) REFERENCES horaire_travail(id_horaire) ON DELETE SET NULL;
+-- ALTER TABLE personnnel_contrat
+-- ADD FOREIGN KEY(id_horaire) REFERENCES horaire_travail(id_horaire) ON DELETE SET NULL;
 
 -- ============================================
 -- 6. FONCTION STOCKÉE : consolider_presence_jour
 -- ============================================
 
 CREATE OR REPLACE FUNCTION consolider_presence_jour(
-    p_id_personnel INT, 
+    p_id_personnel BIGINT, 
     p_date DATE
 ) RETURNS VOID AS $$
 DECLARE
@@ -140,24 +140,21 @@ BEGIN
     SELECT 
         MIN(CASE WHEN type_pointage='ENTREE' THEN date_heure::TIME END),
         MAX(CASE WHEN type_pointage='SORTIE' THEN date_heure::TIME END),
-        COALESCE(
-            EXTRACT(EPOCH FROM (
-                MAX(CASE WHEN type_pointage='PAUSE_FIN' THEN date_heure END) - 
-                MIN(CASE WHEN type_pointage='PAUSE_DEBUT' THEN date_heure END)
-            ))::INT / 60, 
-            0
-        ),
+        COALESCE(EXTRACT(EPOCH FROM (
+            MAX(CASE WHEN type_pointage='PAUSE_FIN' THEN date_heure END) - 
+            MIN(CASE WHEN type_pointage='PAUSE_DEBUT' THEN date_heure END)
+        ))::INT / 60, 0),
         MAX(id_horaire)
     INTO v_heure_arrivee, v_heure_depart, v_duree_pause, v_id_horaire
     FROM pointage
     WHERE id_personnel = p_id_personnel 
       AND date_heure::DATE = p_date;
-    
+
     -- Si pas de pointage d'entrée, sortir
     IF v_heure_arrivee IS NULL THEN
         RETURN;
     END IF;
-    
+
     -- Calculer heures travaillées
     IF v_heure_depart IS NOT NULL THEN
         v_heures_travaillees := ROUND(
@@ -168,32 +165,33 @@ BEGIN
         v_heures_travaillees := 0;
         v_statut := 'EN_COURS';
     END IF;
-    
+
     -- Récupérer l'horaire de référence
     IF v_id_horaire IS NOT NULL THEN
         SELECT heure_debut, heure_fin, duree_pause, tolerance_retard
         INTO v_heure_debut_theorique, v_heure_fin_theorique, v_duree_pause_theorique, v_tolerance
         FROM horaire_travail
         WHERE id_horaire = v_id_horaire;
-        
+
         -- Durée théorique en heures
         v_duree_theorique := ROUND(
             (EXTRACT(EPOCH FROM (v_heure_fin_theorique - v_heure_debut_theorique))::INT / 60 - v_duree_pause_theorique) / 60.0,
             2
         );
-        
+
         -- Calculer retard
-        v_minutes_retard := GREATEST(0, 
+        v_minutes_retard := GREATEST(
+            0, 
             EXTRACT(EPOCH FROM (v_heure_arrivee - v_heure_debut_theorique))::INT / 60 - v_tolerance
         );
-        
+
         -- Calculer heures supplémentaires
         IF v_heure_depart IS NOT NULL THEN
             v_heures_sup := GREATEST(0, v_heures_travaillees - v_duree_theorique);
         ELSE
             v_heures_sup := 0;
         END IF;
-        
+
         -- Déterminer statut
         IF v_heure_depart IS NOT NULL THEN
             IF v_minutes_retard > 0 THEN
@@ -207,11 +205,11 @@ BEGIN
         v_heures_sup := 0;
         v_duree_theorique := 8.00; -- Par défaut
     END IF;
-    
+
     -- Insérer ou mettre à jour presence_journaliere
     INSERT INTO presence_journaliere (
-        id_personnel, date_, heure_arrivee, heure_depart, 
-        duree_pause_reel, heures_travaillees, minutes_retard, 
+        id_personnel, date_, heure_arrivee, heure_depart,
+        duree_pause_reel, heures_travaillees, minutes_retard,
         heures_supplementaires, statut, id_horaire
     ) VALUES (
         p_id_personnel, p_date, v_heure_arrivee, v_heure_depart,
@@ -227,43 +225,46 @@ BEGIN
         heures_supplementaires = EXCLUDED.heures_supplementaires,
         statut = EXCLUDED.statut,
         id_horaire = EXCLUDED.id_horaire;
-    
+
     -- Récupérer l'id_presence_jour
     SELECT id_presence_jour INTO v_id_presence_jour
     FROM presence_journaliere
     WHERE id_personnel = p_id_personnel AND date_ = p_date;
-    
-    -- Si heures sup > 0 ET c'est un jour de semaine normal (Lundi=1 à Vendredi=5 en PostgreSQL)
+
+    -- Si heures sup > 0 ET c'est un jour de semaine normal
     IF v_heures_sup > 0 AND v_heure_depart IS NOT NULL 
        AND EXTRACT(DOW FROM p_date) BETWEEN 1 AND 5 THEN
         
-        -- Calculer total heures dans la semaine (pour déterminer le pourcentage)
+        -- Calculer total heures dans la semaine
         SELECT COALESCE(SUM(heures_travaillees), 0) INTO v_total_heures_semaine
         FROM presence_journaliere
         WHERE id_personnel = p_id_personnel
           AND EXTRACT(WEEK FROM date_) = EXTRACT(WEEK FROM p_date)
           AND EXTRACT(YEAR FROM date_) = EXTRACT(YEAR FROM p_date)
           AND date_ < p_date;
-        
-        -- Déterminer le pourcentage selon les heures cumulées
-        -- Jusqu'à 48h/semaine = 30%, au-delà = 50%
+
+        -- Déterminer le pourcentage (30% jusqu'à 48h, 50% au-delà)
         IF (v_total_heures_semaine + v_heures_travaillees) <= 48 THEN
             v_pourcentage_hs := 30.00;
         ELSE
             v_pourcentage_hs := 50.00;
         END IF;
-        
+
         -- Insérer dans heure_sup
-        INSERT INTO heure_sup (id_personnel, date_, nb_heure, pourcentage, id_presence_jour)
-        VALUES (p_id_personnel, p_date, v_heures_sup, v_pourcentage_hs, v_id_presence_jour)
+        INSERT INTO heure_sup (
+            id_personnel, date_, nb_heure, pourcentage, id_presence_jour
+        ) VALUES (
+            p_id_personnel, p_date, v_heures_sup, v_pourcentage_hs, v_id_presence_jour
+        )
         ON CONFLICT (id_personnel, date_) DO UPDATE SET 
             nb_heure = EXCLUDED.nb_heure,
             pourcentage = EXCLUDED.pourcentage
         WHERE heure_sup.id_presence_jour = v_id_presence_jour;
     END IF;
-    
 END;
 $$ LANGUAGE plpgsql;
+
+
 
 -- ============================================
 -- 7. DONNÉES DE TEST : Horaires de travail
@@ -483,6 +484,20 @@ WHERE mois = EXTRACT(MONTH FROM CURRENT_DATE)
 SELECT * FROM v_montant_heures_sup 
 WHERE mois = EXTRACT(MONTH FROM CURRENT_DATE)
   AND annee = EXTRACT(YEAR FROM CURRENT_DATE);
+
+-- 1. Ajouter les contraintes uniques nécessaires
+ALTER TABLE presence_journaliere 
+DROP CONSTRAINT IF EXISTS unique_personnel_date;
+
+ALTER TABLE presence_journaliere 
+ADD CONSTRAINT unique_personnel_date UNIQUE (id_personnel, date_);
+
+ALTER TABLE heure_sup 
+DROP CONSTRAINT IF EXISTS unique_hs_personnel_date;
+
+ALTER TABLE heure_sup 
+ADD CONSTRAINT unique_hs_personnel_date UNIQUE (id_personnel, date_);
+
 
 -- ============================================
 -- FIN DU SCRIPT
