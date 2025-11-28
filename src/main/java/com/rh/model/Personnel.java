@@ -7,7 +7,6 @@ import java.time.Period;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "personnel")
 public class Personnel {
@@ -64,9 +63,9 @@ public class Personnel {
     @JoinColumn(name = "id_categorie_personnel", nullable = false)
     private CategoriePersonnel categoriePersonnel;
 
+    public Personnel() {
+    }
 
-    public Personnel() {}
-  
     public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo, Genre genre,
             CategoriePersonnel categoriePersonnel) {
         this.dtn = dtn;
@@ -79,8 +78,8 @@ public class Personnel {
     }
 
     public Personnel(LocalDate dtn, Integer statut, String nom, String prenom, String photo,
-                     String matricule, String lieuNaissance, String nationalite, String adresse, String stf,
-                      String telephone,Utilisateur utilisateur, Genre genre, CategoriePersonnel categoriePersonnel) {
+            String matricule, String lieuNaissance, String nationalite, String adresse, String stf,
+            String telephone, Utilisateur utilisateur, Genre genre, CategoriePersonnel categoriePersonnel) {
         this.dtn = dtn;
         this.statut = statut;
         this.nom = nom;
@@ -99,65 +98,125 @@ public class Personnel {
 
     // --- GETTERS & SETTERS ---
 
-    public Long getIdPersonnel() { return idPersonnel; }
+    public Long getIdPersonnel() {
+        return idPersonnel;
+    }
 
-    public void setIdPersonnel(Long idPersonnel) { this.idPersonnel = idPersonnel; }
+    public void setIdPersonnel(Long idPersonnel) {
+        this.idPersonnel = idPersonnel;
+    }
 
-    public LocalDate getDtn() { return dtn; }
+    public LocalDate getDtn() {
+        return dtn;
+    }
 
-    public void setDtn(LocalDate dtn) { this.dtn = dtn; }
+    public void setDtn(LocalDate dtn) {
+        this.dtn = dtn;
+    }
 
-    public Integer getStatut() { return statut; }
+    public Integer getStatut() {
+        return statut;
+    }
 
-    public void setStatut(Integer statut) { this.statut = statut; }
+    public void setStatut(Integer statut) {
+        this.statut = statut;
+    }
 
-    public String getNom() { return nom; }
+    public String getNom() {
+        return nom;
+    }
 
-    public void setNom(String nom) { this.nom = nom; }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-    public String getPrenom() { return prenom; }
+    public String getPrenom() {
+        return prenom;
+    }
 
-    public void setPrenom(String prenom) { this.prenom = prenom; }
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-    public String getPhoto() { return photo; }
+    public String getPhoto() {
+        return photo;
+    }
 
-    public void setPhoto(String photo) { this.photo = photo; }
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
-    public String getTelephone() { return this.telephone; }
+    public String getTelephone() {
+        return this.telephone;
+    }
 
-    public void setTelephone(String phone) { this.telephone = phone; }
+    public void setTelephone(String phone) {
+        this.telephone = phone;
+    }
 
-    public String getMatricule() { return matricule; }
+    public String getMatricule() {
+        return matricule;
+    }
 
-    public void setMatricule(String matricule) { this.matricule = matricule; }
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
 
-    public String getLieuNaissance() { return lieuNaissance; }
+    public String getLieuNaissance() {
+        return lieuNaissance;
+    }
 
-    public void setLieuNaissance(String lieuNaissance) { this.lieuNaissance = lieuNaissance; }
+    public void setLieuNaissance(String lieuNaissance) {
+        this.lieuNaissance = lieuNaissance;
+    }
 
-    public String getNationalite() { return nationalite; }
+    public String getNationalite() {
+        return nationalite;
+    }
 
-    public void setNationalite(String nationalite) { this.nationalite = nationalite; }
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
 
-    public String getAdresse() { return adresse; }
+    public String getAdresse() {
+        return adresse;
+    }
 
-    public void setAdresse(String adresse) { this.adresse = adresse; }
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
 
-    public String getStf() { return stf; }
+    public String getStf() {
+        return stf;
+    }
 
-    public void setStf(String stf) { this.stf = stf; }
+    public void setStf(String stf) {
+        this.stf = stf;
+    }
 
-    public Utilisateur getUtilisateur() { return utilisateur; }
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
 
-    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 
-    public Genre getGenre() { return genre; }
+    public Genre getGenre() {
+        return genre;
+    }
 
-    public void setGenre(Genre genre) { this.genre = genre; }
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
 
-    public CategoriePersonnel getCategoriePersonnel() { return categoriePersonnel; }
+    public CategoriePersonnel getCategoriePersonnel() {
+        return categoriePersonnel;
+    }
 
-    public void setCategoriePersonnel(CategoriePersonnel categoriePersonnel) { this.categoriePersonnel = categoriePersonnel; }
+    public void setCategoriePersonnel(CategoriePersonnel categoriePersonnel) {
+        this.categoriePersonnel = categoriePersonnel;
+    }
 
     public int getAge() {
         if (this.dtn == null) {
@@ -166,8 +225,6 @@ public class Personnel {
         LocalDate now = LocalDate.now();
         return Period.between(this.dtn, now).getYears();
     }
-
-   
 
     @Override
     public String toString() {
@@ -189,4 +246,3 @@ public class Personnel {
                 '}';
     }
 }
-

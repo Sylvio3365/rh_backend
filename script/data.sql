@@ -70,8 +70,14 @@ INSERT INTO
 VALUES
     ('Homme'),
     ('Femme');
-INSERT INTO categorie_personnel (libelle)
-VALUES ('Employes'), ('Cadres'),('Dirigeants');
+
+INSERT INTO
+    categorie_personnel (libelle)
+VALUES
+    ('Employes'),
+    ('Cadres'),
+('Dirigeants');
+
 INSERT INTO
     categorie_personnel (libelle)
 VALUES
@@ -95,48 +101,348 @@ VALUES
     ('Technicien', 5);
 
 -- Insertion des personnels (20 personnels avec âges et sexes varies)
-INSERT INTO personnel (
-    dtn,
-    statut,
-    nom,
-    prenom,
-    photo,
-    matricule,
-    lieu_naissance,
-    nationalite,
-    adresse,
-    stf,
-    telephone,
-    id_genre,
-    id_categorie_personnel,
-    id_utilisateur
-)
+INSERT INTO
+    personnel (
+        dtn,
+        statut,
+        nom,
+        prenom,
+        photo,
+        matricule,
+        lieu_naissance,
+        nationalite,
+        adresse,
+        stf,
+        telephone,
+        id_genre,
+        id_categorie_personnel,
+        id_utilisateur
+    )
 VALUES
--- Dirigeants (3)
-('1975-05-15', 1, 'Rakoto', 'Jean', 'jean.jpg', 'MAT001', 'Antananarivo', 'MALAGASY', 'Analamahitsy', 'Marie', '0321234567', 1, 1, NULL),
-('1978-08-22', 1, 'Rabe', 'Marie', 'marie.jpg', 'MAT002', 'Fianarantsoa', 'MALAGASY', 'Ambatobe', 'Celibataire', '0349876543', 2, 1, NULL),
-('1980-03-10', 1, 'Randria', 'Pierre', 'pierre.jpg', 'MAT003', 'Mahajanga', 'MALAGASY', 'Ivandry', 'Marie', '0331122334', 1, 1, NULL),
+    -- Dirigeants (3)
+    (
+        '1975-05-15',
+        1,
+        'Rakoto',
+        'Jean',
+        'jean.jpg',
+        'MAT001',
+        'Antananarivo',
+        'MALAGASY',
+        'Analamahitsy',
+        'Marie',
+        '0321234567',
+        1,
+        1,
+        NULL
+    ),
+    (
+        '1978-08-22',
+        1,
+        'Rabe',
+        'Marie',
+        'marie.jpg',
+        'MAT002',
+        'Fianarantsoa',
+        'MALAGASY',
+        'Ambatobe',
+        'Celibataire',
+        '0349876543',
+        2,
+        1,
+        NULL
+    ),
+    (
+        '1980-03-10',
+        1,
+        'Randria',
+        'Pierre',
+        'pierre.jpg',
+        'MAT003',
+        'Mahajanga',
+        'MALAGASY',
+        'Ivandry',
+        'Marie',
+        '0331122334',
+        1,
+        1,
+        NULL
+    ),
+    -- Cadres (7)
+    (
+        '1985-11-12',
+        1,
+        'Rasoa',
+        'Sophie',
+        'sophie.jpg',
+        'MAT004',
+        'Toamasina',
+        'MALAGASY',
+        'Ankorondrano',
+        'Celibataire',
+        '0335566778',
+        2,
+        3,
+        NULL
+    ),
+    (
+        '1988-07-25',
+        1,
+        'Rajaona',
+        'Thomas',
+        'thomas.jpg',
+        'MAT005',
+        'Antsirabe',
+        'MALAGASY',
+        'Ambanidia',
+        'Marie',
+        '0346655443',
+        1,
+        3,
+        NULL
+    ),
+    (
+        '1990-02-14',
+        1,
+        'Randriana',
+        'Alice',
+        'alice.jpg',
+        'MAT006',
+        'Antananarivo',
+        'MALAGASY',
+        '67 Ha',
+        'Celibataire',
+        '0347788991',
+        2,
+        3,
+        NULL
+    ),
+    (
+        '1992-09-30',
+        1,
+        'Rakotobe',
+        'Marc',
+        'marc.jpg',
+        'MAT007',
+        'Toliara',
+        'MALAGASY',
+        'Ampasampito',
+        'Marie',
+        '0328899001',
+        1,
+        3,
+        NULL
+    ),
+    (
+        '1995-12-05',
+        1,
+        'Razafy',
+        'Julie',
+        'julie.jpg',
+        'MAT008',
+        'Fianarantsoa',
+        'MALAGASY',
+        'Ambatoroka',
+        'Celibataire',
+        '0335544332',
+        2,
+        3,
+        NULL
+    ),
+    (
+        '1987-04-18',
+        1,
+        'Ramanana',
+        'David',
+        'david.jpg',
+        'MAT009',
+        'Mahajanga',
+        'MALAGASY',
+        'Ankadikely',
+        'Marie',
+        '0329988776',
+        1,
+        3,
+        NULL
+    ),
+    (
+        '1993-06-22',
+        1,
+        'Ravoay',
+        'Sarah',
+        'sarah.jpg',
+        'MAT010',
+        'Toamasina',
+        'MALAGASY',
+        'Andoharanofotsy',
+        'Celibataire',
+        '0342233445',
+        2,
+        3,
+        NULL
+    ),
+    -- Employes (10)
+    (
+        '1998-01-15',
+        1,
+        'Rakotondrabe',
+        'Lucas',
+        'lucas.jpg',
+        'MAT011',
+        'Antananarivo',
+        'MALAGASY',
+        'Anosizato',
+        'Celibataire',
+        '0328877665',
+        1,
+        2,
+        NULL
+    ),
+    (
+        '2000-03-20',
+        1,
+        'Rasolofo',
+        'Emma',
+        'emma.jpg',
+        'MAT012',
+        'Mahajanga',
+        'MALAGASY',
+        'Akamasoa',
+        'Celibataire',
+        '0346677889',
+        2,
+        2,
+        NULL
+    ),
+    (
+        '1997-08-12',
+        1,
+        'Randriamampianina',
+        'Kevin',
+        'kevin.jpg',
+        'MAT013',
+        'Fianarantsoa',
+        'MALAGASY',
+        'Itaosy',
+        'Celibataire',
+        '0334455667',
+        1,
+        2,
+        NULL
+    ),
+    (
+        '1999-11-08',
+        1,
+        'Razanakoto',
+        'Chloe',
+        'chloe.jpg',
+        'MAT014',
+        'Toamasina',
+        'MALAGASY',
+        'Talatamaty',
+        'Celibataire',
+        '0345599221',
+        2,
+        2,
+        NULL
+    ),
+    (
+        '1996-05-25',
+        1,
+        'Rakotoarisoa',
+        'Nicolas',
+        'nicolas.jpg',
+        'MAT015',
+        'Toliara',
+        'MALAGASY',
+        'Sabotsy Namehana',
+        'Marie',
+        '0321144223',
+        1,
+        2,
+        NULL
+    ),
+    (
+        '2001-07-14',
+        1,
+        'Rafaralahy',
+        'Lea',
+        'lea.jpg',
+        'MAT016',
+        'Antsirabe',
+        'MALAGASY',
+        'Ivato',
+        'Celibataire',
+        '0347788110',
+        2,
+        2,
+        NULL
+    ),
+    (
+        '1994-10-30',
+        1,
+        'Rajaonarivelo',
+        'Antoine',
+        'antoine.jpg',
+        'MAT017',
+        'Antananarivo',
+        'MALAGASY',
+        'Ampitatafika',
+        'Marie',
+        '0339988004',
+        1,
+        2,
+        NULL
+    ),
+    (
+        '2002-02-28',
+        1,
+        'Razafindrakoto',
+        'Manon',
+        'manon.jpg',
+        'MAT018',
+        'Mahajanga',
+        'MALAGASY',
+        'Ambatolampy',
+        'Celibataire',
+        '0323301155',
+        2,
+        2,
+        NULL
+    ),
+    (
+        '1995-09-17',
+        1,
+        'Rakotomalala',
+        'Alexandre',
+        'alexandre.jpg',
+        'MAT019',
+        'Toamasina',
+        'MALAGASY',
+        'Ambohimanarina',
+        'Celibataire',
+        '0345566332',
+        1,
+        2,
+        NULL
+    ),
+    (
+        '1998-12-03',
+        1,
+        'Rasamoelina',
+        'Camille',
+        'camille.jpg',
+        'MAT020',
+        'Fianarantsoa',
+        'MALAGASY',
+        'Ankazomanga',
+        'Celibataire',
+        '0334411223',
+        2,
+        2,
+        NULL
+    );
 
--- Cadres (7)
-('1985-11-12', 1, 'Rasoa', 'Sophie', 'sophie.jpg', 'MAT004', 'Toamasina', 'MALAGASY', 'Ankorondrano', 'Celibataire', '0335566778', 2, 3, NULL),
-('1988-07-25', 1, 'Rajaona', 'Thomas', 'thomas.jpg', 'MAT005', 'Antsirabe', 'MALAGASY', 'Ambanidia', 'Marie', '0346655443', 1, 3, NULL),
-('1990-02-14', 1, 'Randriana', 'Alice', 'alice.jpg', 'MAT006', 'Antananarivo', 'MALAGASY', '67 Ha', 'Celibataire', '0347788991', 2, 3, NULL),
-('1992-09-30', 1, 'Rakotobe', 'Marc', 'marc.jpg', 'MAT007', 'Toliara', 'MALAGASY', 'Ampasampito', 'Marie', '0328899001', 1, 3, NULL),
-('1995-12-05', 1, 'Razafy', 'Julie', 'julie.jpg', 'MAT008', 'Fianarantsoa', 'MALAGASY', 'Ambatoroka', 'Celibataire', '0335544332', 2, 3, NULL),
-('1987-04-18', 1, 'Ramanana', 'David', 'david.jpg', 'MAT009', 'Mahajanga', 'MALAGASY', 'Ankadikely', 'Marie', '0329988776', 1, 3, NULL),
-('1993-06-22', 1, 'Ravoay', 'Sarah', 'sarah.jpg', 'MAT010', 'Toamasina', 'MALAGASY', 'Andoharanofotsy', 'Celibataire', '0342233445', 2, 3, NULL),
-
--- Employes (10)
-('1998-01-15', 1, 'Rakotondrabe', 'Lucas', 'lucas.jpg', 'MAT011', 'Antananarivo', 'MALAGASY', 'Anosizato', 'Celibataire', '0328877665', 1, 2, NULL),
-('2000-03-20', 1, 'Rasolofo', 'Emma', 'emma.jpg', 'MAT012', 'Mahajanga', 'MALAGASY', 'Akamasoa', 'Celibataire', '0346677889', 2, 2, NULL),
-('1997-08-12', 1, 'Randriamampianina', 'Kevin', 'kevin.jpg', 'MAT013', 'Fianarantsoa', 'MALAGASY', 'Itaosy', 'Celibataire', '0334455667', 1, 2, NULL),
-('1999-11-08', 1, 'Razanakoto', 'Chloe', 'chloe.jpg', 'MAT014', 'Toamasina', 'MALAGASY', 'Talatamaty', 'Celibataire', '0345599221', 2, 2, NULL),
-('1996-05-25', 1, 'Rakotoarisoa', 'Nicolas', 'nicolas.jpg', 'MAT015', 'Toliara', 'MALAGASY', 'Sabotsy Namehana', 'Marie', '0321144223', 1, 2, NULL),
-('2001-07-14', 1, 'Rafaralahy', 'Lea', 'lea.jpg', 'MAT016', 'Antsirabe', 'MALAGASY', 'Ivato', 'Celibataire', '0347788110', 2, 2, NULL),
-('1994-10-30', 1, 'Rajaonarivelo', 'Antoine', 'antoine.jpg', 'MAT017', 'Antananarivo', 'MALAGASY', 'Ampitatafika', 'Marie', '0339988004', 1, 2, NULL),
-('2002-02-28', 1, 'Razafindrakoto', 'Manon', 'manon.jpg', 'MAT018', 'Mahajanga', 'MALAGASY', 'Ambatolampy', 'Celibataire', '0323301155', 2, 2, NULL),
-('1995-09-17', 1, 'Rakotomalala', 'Alexandre', 'alexandre.jpg', 'MAT019', 'Toamasina', 'MALAGASY', 'Ambohimanarina', 'Celibataire', '0345566332', 1, 2, NULL),
-('1998-12-03', 1, 'Rasamoelina', 'Camille', 'camille.jpg', 'MAT020', 'Fianarantsoa', 'MALAGASY', 'Ankazomanga', 'Celibataire', '0334411223', 2, 2, NULL);
 -- Insertion des contrats pour chaque personnel
 INSERT INTO
     personnnel_contrat (
@@ -187,16 +493,31 @@ VALUES
     ('david.ramanana', 'david123', 9),
     ('sarah.ravoay', 'sarah123', 10);
 
-INSERT INTO ev_effectif (nbemp, annee, mois) VALUES
-(15, 2025, 1),   -- Janvier: 15
-(18, 2025, 2),   -- Février: 18
-(22, 2025, 3),   -- Mars: 22
-(25, 2025, 4),   -- Avril: 25
-(28, 2025, 5),   -- Mai: 28
-(30, 2025, 6),   -- Juin: 30
-(12, 2025, 7),   -- Juillet: 12
-(16, 2025, 8),   -- Août: 16
-(19, 2025, 9),   -- Septembre: 19
-(23, 2025, 10),  -- Octobre: 23
-(20, 2025, 11),  -- Novembre: 20
-(20, 2025, 12);  -- Décembre: 20
+INSERT INTO
+    ev_effectif (nbemp, annee, mois)
+VALUES
+    (15, 2025, 1),
+    -- Janvier: 15
+    (18, 2025, 2),
+    -- Février: 18
+    (22, 2025, 3),
+    -- Mars: 22
+    (25, 2025, 4),
+    -- Avril: 25
+    (28, 2025, 5),
+    -- Mai: 28
+    (30, 2025, 6),
+    -- Juin: 30
+    (12, 2025, 7),
+    -- Juillet: 12
+    (16, 2025, 8),
+    -- Août: 16
+    (19, 2025, 9),
+    -- Septembre: 19
+    (23, 2025, 10),
+    -- Octobre: 23
+    (20, 2025, 11),
+    -- Novembre: 20
+    (20, 2025, 12);
+
+-- Décembre: 20
