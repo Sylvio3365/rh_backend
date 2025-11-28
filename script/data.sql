@@ -187,3 +187,16 @@ VALUES
     ('david.ramanana', 'david123', 9),
     ('sarah.ravoay', 'sarah123', 10);
 
+INSERT INTO ev_effectif (nbemp, annee, mois) VALUES
+(15, 2025, 1),   -- Janvier: 15
+(18, 2025, 2),   -- Février: 18
+(22, 2025, 3),   -- Mars: 22
+(25, 2025, 4),   -- Avril: 25
+(28, 2025, 5),   -- Mai: 28
+(30, 2025, 6),   -- Juin: 30
+(12, 2025, 7),   -- Juillet: 12
+(16, 2025, 8),   -- Août: 16
+(19, 2025, 9),   -- Septembre: 19
+(23, 2025, 10),  -- Octobre: 23
+(20, 2025, 11),  -- Novembre: 20
+(20, 2025, 12);  -- Décembre: 20

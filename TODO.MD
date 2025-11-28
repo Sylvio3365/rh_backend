@@ -1,6 +1,5 @@
 POINTAGE[]
     -QR[]
-        
         *Choisi heure travail
         *SCAN QR CODE
             -saisie type

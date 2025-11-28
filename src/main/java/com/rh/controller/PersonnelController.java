@@ -3,7 +3,6 @@ package com.rh.controller;
 import com.rh.model.Personnel;
 import com.rh.service.PersonnelService;
 import com.rh.model.PersonnelContrat;
-import com.rh.repository.PersonnelContratRepository;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,15 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @RestController
 @RequestMapping("/personnels")
 public class PersonnelController {
 
     @Autowired
     private PersonnelService personnelService;
-  
-  
+
     @GetMapping
     public List<Personnel> getAllPersonnel() {
         return personnelService.findAll();
@@ -146,4 +143,3 @@ public class PersonnelController {
         }
     }
 }
-

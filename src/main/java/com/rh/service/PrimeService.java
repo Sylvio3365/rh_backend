@@ -11,8 +11,6 @@ public class PrimeService {
     private PrimeRepository primeRepository;
 
     public double calculatePrimeForPersonnel(Long personnelId) {
-        // TODO: Implement Prime calculation logic based on personnel and related data
-        // Placeholder implementation; replace with actual logic
         return 0.0;
     }
 }
