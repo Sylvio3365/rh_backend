@@ -150,7 +150,7 @@ CREATE TABLE demande
     FOREIGN KEY (id_type_conge) REFERENCES type_conge (id_type_conge),
     FOREIGN KEY (id_personnel) REFERENCES personnel (id_personnel)
 );
-
+    
 CREATE TABLE presence
 (
     id_presence  SERIAL,

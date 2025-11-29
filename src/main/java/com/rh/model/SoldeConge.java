@@ -86,4 +86,12 @@ public class SoldeConge {
                 ", typeConge=" + typeConge +
                 '}';
     }
+
+    public BigDecimal getSoldeRestant() {
+        if (typeConge == null || typeConge.getNbMax() == null || congeUtilise == null) {
+            return BigDecimal.ZERO;
+        }
+        return BigDecimal.valueOf(typeConge.getNbMax()).subtract(congeUtilise);
+    }
+
 }

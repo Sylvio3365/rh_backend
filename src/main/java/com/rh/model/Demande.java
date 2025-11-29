@@ -38,13 +38,14 @@ public class Demande {
     public Demande() {
     }
 
-    public Demande(String nature, LocalDate debut, LocalDate fin, Integer etat, LocalDate dateDemande, Personnel personnel) {
+    public Demande(String nature, LocalDate debut, LocalDate fin, Integer etat, LocalDate dateDemande, Personnel personnel, TypeConge typeConge) {
         this.nature = nature;
         this.debut = debut;
         this.fin = fin;
         this.etat = etat;
         this.dateDemande = dateDemande;
         this.personnel = personnel;
+        this.typeConge = typeConge;
     }
 
     public Long getIdDemande() {
@@ -103,6 +104,14 @@ public class Demande {
         this.personnel = personnel;
     }
 
+    public TypeConge getTypeConge() {
+        return typeConge;
+    }
+
+    public void setTypeConge(TypeConge typeConge) {
+        this.typeConge = typeConge;
+    }
+
     @Override
     public String toString() {
         return "Demande{" +
@@ -112,7 +121,18 @@ public class Demande {
                 ", fin=" + fin +
                 ", etat=" + etat +
                 ", dateDemande=" + dateDemande +
-                ", personnel=" + personnel +
+                ", personnel=" + (personnel != null ? personnel.getNom() : null) +
+                ", typeConge=" + (typeConge != null ? typeConge.getLibelle() : null) +
                 '}';
+    }
+
+    public String getStatutLibelle() {
+        switch (this.etat) {
+            case 1: return "EN_ATTENTE";
+            case 2: return "VALIDE";
+            case 3: return "REFUSE";
+            case 4: return "ANNULE";
+            default: return "INCONNU";
+        }
     }
 }
