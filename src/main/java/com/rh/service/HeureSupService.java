@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HeureSupService {
@@ -96,5 +98,33 @@ public class HeureSupService {
     @Transactional
     public void supprimerHeureSup(Long idHeureSup) {
         heureSupRepository.deleteById(idHeureSup);
+    }
+
+    /**
+     * Calculer les montants des heures supplémentaires par pourcentage
+     * @param salaireHoraire Le salaire horaire de base
+     * @return Map avec pourcentage en clé et montant horaire en valeur
+     */
+    public Map<Double, Double> calculerHeuresSupplementaires(double salaireHoraire) {
+        Map<Double, Double> heuresSup = new HashMap<>();
+
+        // Heures supplémentaires majorées de 30%
+        heuresSup.put(30.0, salaireHoraire * 1.30);
+
+        // Heures supplémentaires majorées de 40%
+        heuresSup.put(40.0, salaireHoraire * 1.40);
+
+        // Heures supplémentaires majorées de 50%
+        heuresSup.put(50.0, salaireHoraire * 1.50);
+
+        // Heures supplémentaires majorées de 100%
+        heuresSup.put(100.0, salaireHoraire * 2.0);
+
+        // Majoration pour heures de nuit (fixe ou calculée)
+        // Si vous voulez un pourcentage, utilisez par exemple 25% pour la nuit
+        heuresSup.put(130.0, salaireHoraire * 0.3);
+        // Ou si c'est un montant fixe, vous pouvez l'ajouter séparément
+
+        return heuresSup;
     }
 }

@@ -1,16 +1,15 @@
 package com.rh.service;
 
 import com.rh.model.Personnel;
+import com.rh.model.PersonnelDetail;
 import com.rh.repository.PersonnelRepository;
 import com.rh.model.PersonnelContrat;
 import com.rh.repository.PersonnelContratRepository;
 import org.springframework.stereotype.Service;
-import java.util.Map;
-import java.util.List;
+
+import java.util.*;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
@@ -18,6 +17,9 @@ public class PersonnelService {
     
     @Autowired
     private PersonnelRepository personnelRepository;
+
+    @Autowired
+    private PersonnelContratRepository personnelContratRepository;
 
     @Autowired
     private PersonnelContratRepository contratRepository;
@@ -234,4 +236,41 @@ public class PersonnelService {
             return result;
         }
     }
+
+    public PersonnelDetail getPersonnelDetailById(Long idPersonnel) {
+        // Récupérer le personnel
+        Optional<Personnel> personnelOpt = personnelRepository.findById(idPersonnel);
+        if (personnelOpt.isEmpty()) {
+            throw new RuntimeException("Personnel non trouvé avec l'id: " + idPersonnel);
+        }
+
+        Personnel personnel = personnelOpt.get();
+
+        List<PersonnelContrat> contrats = personnelContratRepository.findCurrentContratByPersonnelId(idPersonnel);
+
+        if (contrats.isEmpty()) {
+            return new PersonnelDetail(
+                    personnel,
+                    null, // pas de poste
+                    null, // pas de type de contrat
+                    null, // pas de salaire
+                    null, // pas de date début
+                    null  // pas de date fin
+            );
+        }
+
+        // Prendre le contrat le plus récent (premier de la liste triée par date décroissante)
+        PersonnelContrat currentContrat = contrats.get(0);
+
+        // Construire et retourner le PersonnelDetail
+        return new PersonnelDetail(
+                personnel,
+                currentContrat.getPoste(),
+                currentContrat.getTypeContrat(),
+                currentContrat.getSalaire(),
+                currentContrat.getDateDebut(),
+                currentContrat.getDateFin()
+        );
+    }
+
 }

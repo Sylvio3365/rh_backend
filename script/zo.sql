@@ -300,6 +300,7 @@ INSERT INTO pointage (id_personnel, date_heure, type_pointage, id_horaire, metho
 (1, '2025-01-08 13:00:00', 'PAUSE_FIN', 1, 'QR_CODE'),
 (1, '2025-01-08 20:00:00', 'SORTIE', 1, 'QR_CODE');  -- 3h sup
 
+    select * from personnel;
 -- Jeudi 9 janvier 2025 - Employé 1
 INSERT INTO pointage (id_personnel, date_heure, type_pointage, id_horaire, methode) VALUES
 (1, '2025-01-09 08:00:00', 'ENTREE', 1, 'QR_CODE'),

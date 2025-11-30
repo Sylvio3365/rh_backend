@@ -11,6 +11,8 @@ public class PersonnelContratId implements Serializable {
     private Long idPoste;
 
     @Column(name = "id_personnel")
+    @MapsId("idPersonnel")
+    @JoinColumn(name = "id_personnel")
     private Long idPersonnel;
 
     public PersonnelContratId() {

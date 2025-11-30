@@ -63,7 +63,10 @@ public class Personnel {
     @JoinColumn(name = "id_categorie_personnel", nullable = false)
     private CategoriePersonnel categoriePersonnel;
 
-    private String anciennete;
+    @Column(name = "numero_cnaps",unique = true)
+    private String numeroCnaps;
+
+    public Personnel() {}
   
 
     public Personnel() {
@@ -101,9 +104,16 @@ public class Personnel {
 
     // --- GETTERS & SETTERS ---
 
-    public Long getIdPersonnel() {
-        return idPersonnel;
+
+    public String getNumeroCnaps() {
+        return numeroCnaps;
     }
+
+    public void setNumeroCnaps(String numeroCnaps) {
+        this.numeroCnaps = numeroCnaps;
+    }
+
+    public Long getIdPersonnel() { return idPersonnel; }
 
     public void setIdPersonnel(Long idPersonnel) {
         this.idPersonnel = idPersonnel;

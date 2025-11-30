@@ -21,6 +21,8 @@ public class Irsa {
     @Column(name = "taux", nullable = false, precision = 15, scale = 2)
     private BigDecimal taux;
 
+    private double montant;
+
     public Irsa() {
     }
 
@@ -28,6 +30,14 @@ public class Irsa {
         this.min = min;
         this.max = max;
         this.taux = taux;
+    }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(double montant) {
+        this.montant = montant;
     }
 
     public Long getIdIrsa() {

@@ -11,8 +11,18 @@ public class CnapsService {
     private CnapsRepository cnapsRepository;
 
     public double calculateCnapsForPersonnel(Long personnelId) {
-        // TODO: Implement CNAPS calculation logic based on personnel and related data
-        // Placeholder implementation; replace with actual logic
         return 0.0;
+    }
+
+    public double calculateCnaps(Double salaire)throws Exception{
+        if (salaire == null && salaire <= 0) {
+            throw new Exception("Le salaire est null lors du calcul cnaps");
+        }
+        Double plafond = 350000*8*0.01;
+        Double salaire1 = salaire*0.01;
+        if(salaire1 < plafond){
+            return salaire1;
+        }
+        return plafond;
     }
 }
