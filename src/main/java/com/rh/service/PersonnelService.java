@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.List;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,56 @@ public class PersonnelService {
         }
         return null;
     }
+
+    public String getAnciennete(Long idPersonnel) {
+        List<PersonnelContrat> contrats = contratRepository.findByIdIdPersonnel(idPersonnel);
+        if (contrats.isEmpty()) {
+            return "Aucun contrat";
+        }
+        LocalDate firstStart = contrats.get(0).getDateDebut();
+        for (PersonnelContrat c : contrats) {
+            if (c.getDateDebut().isBefore(firstStart)) {
+                firstStart = c.getDateDebut();
+            }
+        }
+        Period period = Period.between(firstStart, LocalDate.now());
+        int years = period.getYears();
+        int months = period.getMonths();
+
+        return years + " ans et " + months + " mois";
+    }
+
+    public String getAncienneteMoyenne() {
+        List<Personnel> personnels = personnelRepository.findAll();
+        if (personnels.isEmpty()) return "0 an et 0 mois";
+
+        int totalMonths = 0;
+        int count = 0;
+        for (Personnel p : personnels) {
+            List<PersonnelContrat> contrats = contratRepository.findByIdIdPersonnel(p.getIdPersonnel());
+            if (contrats.isEmpty()) continue;
+
+            LocalDate firstStart = contrats.get(0).getDateDebut();
+            for (PersonnelContrat c : contrats) {
+                if (c.getDateDebut().isBefore(firstStart)) {
+                    firstStart = c.getDateDebut();
+                }
+            }
+
+            Period period = Period.between(firstStart, LocalDate.now());
+            int months = period.getYears() * 12 + period.getMonths();
+            totalMonths += months;
+            count++;
+        }
+        if (count == 0) return "0 an et 0 mois";
+        int avgMonths = totalMonths / count;
+        int years = avgMonths / 12;
+        int months = avgMonths % 12;
+
+        return years + " ans et " + months + " mois";
+    }
+
+
 
 
     // public List<PersonnelDTO> getAllPersonnel() {
