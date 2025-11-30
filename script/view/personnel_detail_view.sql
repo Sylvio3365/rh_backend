@@ -1,10 +1,9 @@
 CREATE OR REPLACE VIEW personnel_detail AS
 SELECT 
-    p.id_personnel,
-    p.nom,
-    p.prenom,
-    post.nom AS poste,
-    tc.libelle AS type_contrat,
+    p.nom as Nom,
+    p.prenom as Prenom,
+    post.nom as poste,
+    tc.*,
     pc.date_debut,
     pc.date_fin,
     pc.salaire
@@ -17,3 +16,5 @@ WHERE pc.date_debut = (
     FROM personnnel_contrat pc2
     WHERE pc2.id_personnel = p.id_personnel
 );
+
+drop view if exists personnel_detail;

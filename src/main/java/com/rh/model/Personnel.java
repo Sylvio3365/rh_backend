@@ -64,6 +64,8 @@ public class Personnel {
     @JoinColumn(name = "id_categorie_personnel", nullable = false)
     private CategoriePersonnel categoriePersonnel;
 
+    @Column(name = "numero_cnaps",unique = true)
+    private String numeroCnaps;
 
     public Personnel() {}
   
@@ -98,6 +100,15 @@ public class Personnel {
     }
 
     // --- GETTERS & SETTERS ---
+
+
+    public String getNumeroCnaps() {
+        return numeroCnaps;
+    }
+
+    public void setNumeroCnaps(String numeroCnaps) {
+        this.numeroCnaps = numeroCnaps;
+    }
 
     public Long getIdPersonnel() { return idPersonnel; }
 
@@ -166,8 +177,6 @@ public class Personnel {
         LocalDate now = LocalDate.now();
         return Period.between(this.dtn, now).getYears();
     }
-
-   
 
     @Override
     public String toString() {

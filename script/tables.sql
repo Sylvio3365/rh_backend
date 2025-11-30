@@ -94,6 +94,7 @@ CREATE TABLE personnel
     id_utilisateur         INTEGER,
     id_genre               INTEGER      NOT NULL,
     id_categorie_personnel INTEGER      NOT NULL,
+    numeroCnaps            VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id_personnel),
     UNIQUE (id_utilisateur),
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur),

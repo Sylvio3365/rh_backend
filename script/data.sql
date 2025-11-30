@@ -200,3 +200,25 @@ INSERT INTO ev_effectif (nbemp, annee, mois) VALUES
 (23, 2025, 10),  -- Octobre: 23
 (20, 2025, 11),  -- Novembre: 20
 (20, 2025, 12);  -- Décembre: 20
+
+
+
+-- 1. Vérifier l'état actuel des numéros CNAPS
+SELECT 'Avant mise à jour' as etat, id_personnel, nom, prenom, numero_cnaps
+FROM personnel
+WHERE id_personnel BETWEEN 1 AND 20
+ORDER BY id_personnel;
+
+-- 2. Mise à jour des numéros CNAPS
+  3. Vérifier le résultat après mise à jour
+SELECT 'Après mise à jour' as etat, id_personnel, nom, prenom, numero_cnaps
+FROM personnel
+WHERE id_personnel BETWEEN 1 AND 20
+ORDER BY id_personnel;
+
+-- 4. Vérifier qu'il n'y a pas de doublons
+SELECT numero_cnaps, COUNT(*) as occurrences
+FROM personnel
+WHERE numero_cnaps IS NOT NULL
+GROUP BY numero_cnaps
+HAVING COUNT(*) > 1;
