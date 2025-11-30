@@ -15,6 +15,11 @@ public class Document {
     @Column(name = "type_fichier", nullable = false, length = 50)
     private String typeFichier;
 
+    @ManyToOne
+    @MapsId("idTypeDocument")
+    @JoinColumn(name = "id_type_document")
+    private TypeDocument typeDocument;
+
     public Document() {
     }
 
@@ -46,6 +51,14 @@ public class Document {
 
     public void setTypeFichier(String typeFichier) {
         this.typeFichier = typeFichier;
+    }
+
+    public TypeDocument getTypeDocument() {
+        return typeDocument;
+    }
+
+    public void setTypeDocument(TypeDocument typeDocument) {
+        this.typeDocument = typeDocument;
     }
 
     @Override

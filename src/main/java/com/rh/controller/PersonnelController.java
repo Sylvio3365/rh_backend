@@ -1,12 +1,18 @@
 package com.rh.controller;
 
+import com.rh.model.Document;
 import com.rh.model.Personnel;
+import com.rh.service.DocumentService;
 import com.rh.service.PersonnelService;
 import com.rh.model.PersonnelContrat;
+
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,27 +28,10 @@ public class PersonnelController {
     @Autowired
     private PersonnelService personnelService;
 
+    @Autowired
+    private DocumentService docService;
+
     @GetMapping
-    public List<Personnel> getAllPersonnel() {
-        return personnelService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Personnel getPersonnelById(@PathVariable Long id) {
-        return personnelService.findById(id);
-    }
-
-    @GetMapping("/{id}/contrats")
-    public List<PersonnelContrat> getContratById(@PathVariable Long id) {
-        return personnelService.getContratByPersonnel(id);
-    }
-
-    @GetMapping("/{id}/contrat/actif")
-    public PersonnelContrat getContratActifById(@PathVariable Long id) {
-        return personnelService.getContratActifByPersonnel(id);
-    }
-
-    @GetMapping("/all")
     public ResponseEntity<Map<String, Object>> getAllPersonnels() {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -58,6 +47,111 @@ public class PersonnelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> getPersonnelById(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Personnel p = personnelService.findById(id);
+            p.setAnciennete(personnelService.getAnciennete(id));
+            response.put("success", true);
+            response.put("data", p);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/{id}/contrats")
+    public ResponseEntity<Map<String, Object>> getContratById(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            List<PersonnelContrat> liste = personnelService.getContratByPersonnel(id);
+            response.put("success", true);
+            response.put("data", liste);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/{id}/contrat/actif")
+    public ResponseEntity<Map<String, Object>> getContratActifById(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            PersonnelContrat contrat = personnelService.getContratActifByPersonnel(id);
+            response.put("success", true);
+            response.put("data", contrat);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("{id}/documents")
+    public ResponseEntity<Map<String, Object>> getDocumentsByPersonnel(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            List<Document> personnel = docService.findByPersonnel(id);
+            response.put("success", true);
+            response.put("data", personnel);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+        
+    @GetMapping("/{id}/anciennete")
+    public ResponseEntity<Map<String, Object>> getAnciennete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String anciennete = personnelService.getAnciennete(id);
+            response.put("success", true);
+            response.put("data", anciennete);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/anciennete/moyenne")
+    public ResponseEntity<Map<String, Object>> getAncienneteMoyenne() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String moyenne = personnelService.getAncienneteMoyenne();
+
+            response.put("success", true);
+            response.put("data", moyenne);
+            response.put("error", null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("data", null);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 
     @GetMapping("/statistics/gender-distribution")
     public ResponseEntity<Map<String, Object>> getGenderDistributionStatistics() {

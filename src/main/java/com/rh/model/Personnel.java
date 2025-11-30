@@ -63,6 +63,9 @@ public class Personnel {
     @JoinColumn(name = "id_categorie_personnel", nullable = false)
     private CategoriePersonnel categoriePersonnel;
 
+    private String anciennete;
+  
+
     public Personnel() {
     }
 
@@ -217,6 +220,9 @@ public class Personnel {
     public void setCategoriePersonnel(CategoriePersonnel categoriePersonnel) {
         this.categoriePersonnel = categoriePersonnel;
     }
+
+    public String getAnciennete() { return anciennete; }
+    public void setAnciennete(String anciennete) { this.anciennete = anciennete; }
 
     public int getAge() {
         if (this.dtn == null) {
